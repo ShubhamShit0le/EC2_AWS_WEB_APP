@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        async function fetchUsers() {
+            const response = await fetch('/users/api');
+            const users = await response.json();
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+            users.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = `${user.name} - ${user.email}`;
+                userList.appendChild(li);
+            });
+        }
+
+        window.onload = fetchUsers;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Users</h1>
+        <form action="/users/add" method="POST">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <button type="submit">Add User</button>
+        </form>
+        <ul id="userList"></ul>
+    </div>
+</body>
+</html>
